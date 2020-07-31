@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -18,18 +17,15 @@ char *add_to_str(char **s, char c)
 	int i;
 	int len;
 
-	i = 0;
+	i = -1;
 	len = ft_strlen(*s);
 	if(!(new = malloc(sizeof(char) * len + 2)))
 		return (NULL);
-	while (i < len)
-	{
+	while (++i < len)
 		new[i] = (*s)[i];
-		i++;
-	}
 	free(*s);
 	new[i] = c;
-	new[++i] = '\0';
+	new[i + 1] = '\0';
 	return (new);
 }
 
@@ -39,9 +35,8 @@ int get_next_line(char **line)
 	char c[1];
 	int readed;
 
-	if (read(0, 0, 0) == -1)
+	if ((read(0, 0, 0) == -1) || (!(s = malloc(1))))
 		return (-1);
-	s = malloc(1);
 	*s = '\0';
 	readed = 1;
 	while (readed && (readed = read(0, c,1 )))
