@@ -6,7 +6,7 @@
 /*   By: clauren <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 23:37:23 by clauren           #+#    #+#             */
-/*   Updated: 2020/08/01 22:07:21 by clauren          ###   ########.fr       */
+/*   Updated: 2020/08/13 21:22:30 by clauren          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int get_next_line(char **line)
 	char c;
 	int readed;
 
-	if ((read(0, 0, 0) == -1) || (!(s = malloc(1))))
+	if ((read(0, 0, 0) == -1) || (!(s = malloc(1))) || !line)
 		return (-1);
 	*s = '\0';
 	readed = 1;
-	while (readed && (readed = read(0, &c ,1 )))
+	while (readed && (readed = read(0, &c , 1)))
 	{
 		if (c == '\n')
 			break ;
@@ -66,19 +66,21 @@ int get_next_line(char **line)
 
 int main()
 {
-	char *line;
+	char *line = NULL;
 	int ret;
 	int len;
 	char n = '\n';
 
-	while((ret = get_next_line(&line)) >= 0)
+	while((ret = get_next_line(NULL)) >= 0)
 	{
 		len = ft_strlen(line);
 		write(1, line, len);
 		write(1, &n, 1);
 		free(line);
+
 		if (!ret)
 			break ;
 	}
+	printf("%d", ret);
 	return 0;
 }
